@@ -11,25 +11,30 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {ConvoListPage} from "../pages/convo-list/convo-list";
 import {ConvosProvider} from '../providers/convos/convos';
+import {ComponentsModule} from "../components/components.module";
+import {ConvoEditPage} from "../pages/convo-edit/convo-edit";
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
-    ConvoListPage
+    ConvoListPage,
+    ConvoEditPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
     ListPage,
-    ConvoListPage
+    ConvoListPage,
+    ConvoEditPage
   ],
   providers: [
     StatusBar,

@@ -6,8 +6,10 @@
 <ion-content padding>
   <ion-list>
     <ng-container *ngFor="let group of groupList">
-      <ion-item color="primary">{{group}}</ion-item>
-      <ion-item *ngFor="let convo of groups.get(group)">{{convo.id}}</ion-item>
+      <ng-container *ngIf="groups.get(group) && groups.get(group).length > 0">
+        <ion-item-divider color="primary">{{group}}</ion-item-divider>
+        <convo-list-item *ngFor="let convo of groups.get(group)" [convo]="convo" (select)="selectConvo($event)" (duplicate)="duplicateConvo($event)" (delete)="deleteConvo($event)"></convo-list-item>
+      </ng-container>
     </ng-container>
   </ion-list>
   <ion-fab top right edge>

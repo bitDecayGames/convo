@@ -1,0 +1,10 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="convo">
+      <ion-input [(ngModel)]="convo.group"></ion-input>
+      <ion-input [(ngModel)]="convo.name"></ion-input>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding *ngIf="convo">
+</ion-content>

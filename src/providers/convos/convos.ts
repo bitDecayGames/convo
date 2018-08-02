@@ -16,7 +16,10 @@ export class ConvosProvider {
     this.list = [];
     this.byId = new Map<string, Convo>();
     this.grouped = new Map<string, Convo[]>();
-    return this.storage.get("convo-list").then(list => Promise.all(list.map(id => this.storage.get(id)))).then(dataList => dataList.map(data => new Convo(data))).then(convoList => {
+    return this.storage.get("convo-list").then(obj => {
+      if (obj) return obj;
+      else return [];
+    }).then(list => Promise.all(list.map(id => this.storage.get(id)))).then(dataList => dataList.map(data => new Convo(data))).then(convoList => {
       convoList.forEach(convo => {
         this.add(convo);
       });
@@ -26,6 +29,7 @@ export class ConvosProvider {
   }
 
   public add(convo:Convo){
+    if (this.byId.has(convo.id)) throw new Error("Convo.id must be unique");
     this.list.push(convo);
     this.byId.set(convo.id, convo);
     let group:Convo[] = [];
@@ -35,12 +39,14 @@ export class ConvosProvider {
   }
 
   public update(convo:Convo){
+    let foundKey:string = undefined;
     this.byId.forEach((value, key, map) => {
-      if (value.id === convo.id) {
-        map.delete(key);
-        map.set(convo.id, convo);
-      }
+      if (value.id === convo.id) foundKey = key;
     });
+    if (foundKey) {
+      this.byId.delete(foundKey);
+      this.byId.set(convo.id, convo);
+    }
     this.grouped.forEach((value, key, map) => {
       let index = value.findIndex(c => c.id === convo.id && key !== convo.group);
       if (index >= 0){

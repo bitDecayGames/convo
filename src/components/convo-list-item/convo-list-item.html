@@ -1,0 +1,11 @@
+<ion-item-sliding #slidingItem>
+  <button ion-item (click)="doSelect()">
+    {{convo.name}}
+  </button>
+  <ion-item-options side="left">
+    <button ion-button color="light" (click)="doDuplicate($event)" menuClose>Duplicate</button>
+  </ion-item-options>
+  <ion-item-options side="right">
+    <button ion-button color="danger" (click)="doDelete()">Delete</button>
+  </ion-item-options>
+</ion-item-sliding>
